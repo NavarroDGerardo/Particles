@@ -36,9 +36,9 @@ public class Emitter : MonoBehaviour
             pScript.m = pScript.r * 2;
             pScript.restitution = 0.9f;
             pScript.f = Vector3.zero;
-            pScript.f.y = - pScript.m * pScript.g;
 
-            //TODO The particles will explode from the emitter at(0,0, 0), with random forces in ±X ±Y and ±Z.
+            //The particles will explode from the emitter at(0,0, 0), with random forces in ±X ±Y and ±Z.
+            pScript.f.y = -pScript.m * pScript.g * Random.Range(-0.2f, 0.2f);
             pScript.f.x = Random.Range(-0.2f, 0.2f);
             pScript.f.z = Random.Range(-0.2f, 0.2f);
         }
