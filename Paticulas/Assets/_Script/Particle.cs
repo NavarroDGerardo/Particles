@@ -134,7 +134,7 @@ public class Particle : MonoBehaviour
                 f.y = -m * g;
             }
             else{
-                f.y = -m * g * Random.Range(-2f, 2f);
+                f.y = -m * g * Random.Range(-3.5f, 3.5f);
                 f.x = -m * g *  Random.Range(-0.2f, 0.2f);
                 f.z = -m * g * Random.Range(-0.2f, 0.2f);
             }
