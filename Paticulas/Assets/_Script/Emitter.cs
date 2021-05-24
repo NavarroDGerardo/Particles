@@ -30,17 +30,14 @@ public class Emitter : MonoBehaviour
             pScript.color = new Vector3(c.r, c.g, c.b);
             pScript.r = diam / 2f;
             pScript.g = 9.81f;
-            pScript.currPos = new Vector3(Random.Range(-10f, 10f), Random.Range(16f, 20f), Random.Range(-10f, 10f));
+            pScript.currPos = new Vector3(Random.Range(-5f, 5f), 10f, Random.Range(-5f, 5f));
             pScript.prevPos = pScript.currPos;
             //Each particle’s mass will equal the radius times 2.
             pScript.m = pScript.r * 2;
             pScript.restitution = 0.9f;
             pScript.f = Vector3.zero;
 
-            //The particles will explode from the emitter at(0,0, 0), with random forces in ±X ±Y and ±Z.
-            pScript.f.y = -pScript.m * pScript.g * Random.Range(-0.2f, 0.2f);
-            pScript.f.x = Random.Range(-0.2f, 0.2f);
-            pScript.f.z = Random.Range(-0.2f, 0.2f);
+            
         }
     }
     // Update is called once per frame

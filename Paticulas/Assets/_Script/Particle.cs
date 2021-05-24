@@ -6,6 +6,7 @@ public class Particle : MonoBehaviour
     public float r;
     public float g;
     public float m;
+    public float lastfx, lastfz, lastfy;
     public Vector3 f;
     public Vector3 a;
     public Vector3 prevPos;
@@ -17,6 +18,8 @@ public class Particle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //The particles will explode from the emitter at(0,0, 0), with random forces in ±X ±Y and ±Z.
+        
 
     }
     void CheckFloor()
@@ -30,23 +33,112 @@ public class Particle : MonoBehaviour
         }
     }
 
-    void CheckWall()
+    void CheckRightWall()
     {
+        
+        //The simulation runs inside an imaginary cube of side20, centered at the origin.
+        if (currPos.x > 10.0f - r)
+        {
+            /*prevPos.x = currPos.x;
+            Vector3 vel = (currPos - prevPos) / Time.deltaTime;
+            float speed = vel.magnitude;
+            Vector3 direction = Vector3.Reflect(speed.normalized, Vector3.right)*/
+            Debug.Log("Right Bounce");
+            f.x = -1 * restitution;;
+            //f.x = -lastfx * restitution;
+        }else{
+            lastfx = f.x;
+        }
+
+    }
+
+    void CheckLeftWall()
+    {
+
+        
+        //The simulation runs inside an imaginary cube of side20, centered at the origin.
+        if (currPos.x < -10.0f + r)
+        {
+            Debug.Log("Left Bounce");
+            f.x = 1 * restitution;;
+            //f.x = -lastfx * restitution;
+        }else{
+            lastfx = f.x;
+        }
+
+    }
+
+    void CheckTopWall()
+    {
+        
+        //The simulation runs inside an imaginary cube of side20, centered at the origin.
+        if (currPos.y > 20.0f - r && f.y > 0)
+        {
+            Debug.Log("Top Bounce");
+            f.y = -1 * restitution;
+            //f.y = -lastfy * restitution;
+        }else{
+            lastfy = f.y;
+        }
+
+    }
+
+    void CheckFrontWall()
+    {
+        
+        //The simulation runs inside an imaginary cube of side20, centered at the origin.
+        if (currPos.z > 10.0f - r)
+        {
+            
+            Debug.Log("Front Bounce");
+            f.z = -1 * restitution;
+            //f.z = -lastfz * restitution;
+            
+        }else{
+            lastfz = f.z;
+        }
+
+    }
+
+    void CheckBackWall()
+    {
+        
+        //The simulation runs inside an imaginary cube of side20, centered at the origin.
+        if (currPos.z < -10.0f + r)
+        {
+          
+            Debug.Log("Back Bounce");
+            f.z =  1 * restitution;
+            //f.z = -lastfz * restitution;
+        }else{
+            lastfz = f.z;
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(currPos);
+        
+        
         if(Mathf.Abs(currPos.y - prevPos.y) < 0.00001f && Mathf.Abs(currPos.y - r) < 0.00001f)
         {
             currPos.y = r;
             prevPos.y = r;
-            f.y = 0;
+            f.y = Random.Range(-15f, 15f);;
         }
         else
         {
-            f.y = -m * g;
+            if (Time.realtimeSinceStartup > 7f){
+                f.y = -m * g;
+            }
+            else{
+                f.y = -m * g * Random.Range(-2f, 2f);
+                f.x = -m * g *  Random.Range(-0.2f, 0.2f);
+                f.z = -m * g * Random.Range(-0.2f, 0.2f);
+            }
+          
             if(currPos.y != prevPos.y)
             {
                 Vector3 vel = (currPos - prevPos) / Time.deltaTime;
@@ -68,7 +160,11 @@ public class Particle : MonoBehaviour
             currPos = 2 * currPos - prevPos + a * dt * dt;
             prevPos = temp;
             CheckFloor();
-            CheckWall();
+            CheckLeftWall();
+            CheckRightWall();
+            CheckFrontWall();
+            CheckBackWall();
+            CheckTopWall();
         }
         transform.localPosition = currPos;
     }
