@@ -34,7 +34,7 @@ public class Emitter : MonoBehaviour
             pScript.prevPos = pScript.currPos;
             //Each particle’s mass will equal the radius times 2.
             pScript.m = pScript.r * 2;
-            pScript.restitution = 0.9f;
+            pScript.restitution = 0.7f;
             pScript.f = Vector3.zero;
 
             

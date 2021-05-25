@@ -43,11 +43,13 @@ public class Particle : MonoBehaviour
             Vector3 vel = (currPos - prevPos) / Time.deltaTime;
             float speed = vel.magnitude;
             Vector3 direction = Vector3.Reflect(speed.normalized, Vector3.right)*/
+            prevPos.x = currPos.x;
+            currPos.x = 10.0f - r;
+            f.x = -f.x * restitution;
+            a = f / m;
             Debug.Log("Right Bounce");
-            f.x = -1 * restitution;;
+            //f.x = -1 * restitution;;
             //f.x = -lastfx * restitution;
-        }else{
-            lastfx = f.x;
         }
 
     }
@@ -59,11 +61,14 @@ public class Particle : MonoBehaviour
         //The simulation runs inside an imaginary cube of side20, centered at the origin.
         if (currPos.x < -10.0f + r)
         {
+            prevPos.x = currPos.x;
+            currPos.x = -10.0f + r;
+            //f.x = (vector reflejado) * rest
+            f.x = -f.x * restitution;
+            a = f / m;
             Debug.Log("Left Bounce");
-            f.x = 1 * restitution;;
+            //f.x = 1 * restitution;;
             //f.x = -lastfx * restitution;
-        }else{
-            lastfx = f.x;
         }
 
     }
@@ -75,10 +80,13 @@ public class Particle : MonoBehaviour
         if (currPos.y > 20.0f - r && f.y > 0)
         {
             Debug.Log("Top Bounce");
-            f.y = -1 * restitution;
-            //f.y = -lastfy * restitution;
-        }else{
-            lastfy = f.y;
+            prevPos.y = currPos.y;
+            currPos.y = 20.0f - r;
+            //f.x = (vector reflejado) * rest
+            f.y = -f.y * restitution;
+            a = f / m;
+      
+            //f.x = 1 * restitution;;
         }
 
     }
@@ -90,12 +98,15 @@ public class Particle : MonoBehaviour
         if (currPos.z > 10.0f - r)
         {
             
+            prevPos.z = currPos.z;
+            currPos.z = 10.0f - r;
+            //f.x = (vector reflejado) * rest
+            f.z = -f.z * restitution;
+            a = f / m;
             Debug.Log("Front Bounce");
-            f.z = -1 * restitution;
-            //f.z = -lastfz * restitution;
+            //f.x = 1 * restitution;;
+            //f.x = -lastfx * restitution;
             
-        }else{
-            lastfz = f.z;
         }
 
     }
@@ -106,12 +117,14 @@ public class Particle : MonoBehaviour
         //The simulation runs inside an imaginary cube of side20, centered at the origin.
         if (currPos.z < -10.0f + r)
         {
-          
+            prevPos.z = currPos.z;
+            currPos.z = -10.0f + r;
+            //f.x = (vector reflejado) * rest
+            f.z = -f.z * restitution;
+            a = f / m;
             Debug.Log("Back Bounce");
             f.z =  1 * restitution;
             //f.z = -lastfz * restitution;
-        }else{
-            lastfz = f.z;
         }
 
     }
@@ -134,6 +147,7 @@ public class Particle : MonoBehaviour
                 f.y = -m * g;
             }
             else{
+                //Probar diferentes fuerzas
                 f.y = -m * g * Random.Range(-3.5f, 3.5f);
                 f.x = -m * g *  Random.Range(-0.2f, 0.2f);
                 f.z = -m * g * Random.Range(-0.2f, 0.2f);
