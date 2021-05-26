@@ -143,14 +143,14 @@ public class Particle : MonoBehaviour
         }
         else
         {
-            if (Time.realtimeSinceStartup > 7f){
+            if (Time.realtimeSinceStartup > 5.0f){
                 f.y = -m * g;
             }
             else{
                 //Probar diferentes fuerzas
                 f.y = -m * g * Random.Range(-3.5f, 3.5f);
-                f.x = -m * g *  Random.Range(-0.2f, 0.2f);
-                f.z = -m * g * Random.Range(-0.2f, 0.2f);
+                f.x = -m * g *  Random.Range(-1.0f, 1.0f);
+                f.z = -m * g * Random.Range(-1.0f, 1.0f);
             }
           
             if(currPos.y != prevPos.y)
